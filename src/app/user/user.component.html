@@ -1,0 +1,77 @@
+<div class="container">
+    <div [innerHtml]="target"> </div>
+    <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+    <div class="mb-5 mt-5" style="text-align:center;">
+        <div>
+            <span style="font-size: 35px;"><u>Student Dashboard</u></span>
+        </div>
+
+        <button class="btn btn-danger" style="margin-left: 1200px;" (click)="logoutUser()">Logout</button>
+    </div>
+
+    <div class="row mb-2">
+
+        <div class="col-md-1">
+            <select class="form-control" (change)="setPageLength()" name="pageLength" [(ngModel)]="userobj.pageLength">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+        </div>
+
+        <div class="col-md-7"></div>
+
+        <div class="col-md-4">
+            <div class="search-hero">
+                <input class="form-control" type="text" name="search" [(ngModel)]="userobj.search" autocomplete="off"
+                    placeholder="search...">
+                <button class="btn btn-primary" style="margin-left: 10px;" (click)="searchUser()">Search</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <table class="table">
+
+                <!-- 
+          // Icons
+          1. <i class="fa fa-sort" ></i>
+          2. <i class="fa fa-sort-down"></i>
+          3. <i class="fa fa-sort-up"></i>
+         -->
+
+                <thead>
+                    <tr>
+                        <th (click)="orderByMe('name')">Name <i [ngClass]="classnamesort"></i> </th>
+                        <th (click)="orderByMe('email')">Email <i [ngClass]="classnamesort"></i> </th>
+                        <th (click)="orderByMe('contact')">Contact <i [ngClass]="classnamesort"></i> </th>
+                        <th>Action </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let st of studentData">
+                        <td>{{st.name | uppercase}}</td>
+                        <td>{{st.email}}</td>
+                        <td>{{st.contact}}</td>
+                        <td> <button class="btn btn-danger" (click)="deleteData(st.id)">Delete</button>
+                            <button class="btn btn-primary mx-2" routerLink="/edit/{{st.id}}">Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="list-pagination">
+        <ngb-pagination [collectionSize]='collectionSize' [pageSize]="limit" [(page)]="page"
+            aria-label="Default pagination" (pageChange)="showApiData()"></ngb-pagination>
+    </div>
+
+</div>
